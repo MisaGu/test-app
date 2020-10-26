@@ -1,5 +1,5 @@
 import { classUtils } from '../../utils';
-import header from './header.html'
+import header from './header.html';
 import './header.scss';
 
 export class HeaderController {
@@ -9,17 +9,17 @@ export class HeaderController {
     this.template = el.firstChild;
   }
 
-  onLoad() {
+  onInit() {
     this.menuTemplate = this.template.querySelector('.headerModule__menu');
 
     if (!APP.view.bkp.sm) {
-      this.menuTemplate.addEventListener('mouseenter', (e) => {
+      this.menuTemplate.addEventListener('mouseenter', () => {
         classUtils.addClassEffect(this.menuTemplate, 'opened');
       });
       this.menuTemplate.addEventListener('mouseleave', () => {
         classUtils.removeClassEffect(this.menuTemplate, 'opened');
       });
-      this.menuTemplate.addEventListener('click', (e) => {
+      this.menuTemplate.addEventListener('click', () => {
         classUtils.toggleClassEffect(this.menuTemplate, 'opened');
       });
     }
