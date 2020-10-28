@@ -1,0 +1,27 @@
+@import "$scss/variables.scss";
+
+.sidebarWrapper {
+  padding: 10px;
+
+  &__text {
+    line-height: 18px;
+  }
+
+  &__list {
+    &__item {
+      padding: 5px;
+      cursor: pointer;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+
+  hr {
+    border: 0px;
+    height: 1px;
+    background: $color5;
+    margin: 18px 0;
+  }
+}

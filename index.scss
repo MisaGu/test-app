@@ -1,0 +1,46 @@
+@import "/src/scss/variables.scss";
+@import "/src/scss/functions.scss";
+
+body {
+  margin: 0;
+  padding: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow-x: hidden;
+}
+
+#root {
+  padding: 0 20px;
+
+  * {
+    box-sizing: border-box;
+    position: relative;
+  }
+
+  #main {
+    margin: 20px 0;
+    float: left;
+    width: calc(100% - 240px);
+  }
+
+  #side {
+    margin: 20px 0;
+    border: 1px solid $color6;
+    width: 220px;
+    min-height: 60vh;
+    float: right;
+  }
+
+  @media (max-width: 768px) {
+    #main {
+      float: unset;
+      width: 100%;
+    }
+
+    #side {
+      width: 100%;
+      min-height: auto;
+      float: unset;
+    }
+  }
+}

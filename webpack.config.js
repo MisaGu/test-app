@@ -1,16 +1,24 @@
+const path = require('path');
+
 module.exports = {
   entry: [
+    './index.scss',
     './src/app.js',
-    './src/app.scss'
   ],
   output: {
     path: __dirname,
     publicPath: '/',
     filename: 'bundle.js'
   },
+  resolve: {
+    alias: {
+      $component: path.resolve(__dirname, 'src/components'),
+      $scss: path.resolve(__dirname, 'src/scss'),
+      $utils: path.resolve(__dirname, 'src/utils'),
+    }
+  },
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.js$/,
         exclude: /(node_modules)/,
         use: {
@@ -25,21 +33,20 @@ module.exports = {
                     ie: '9'
                   },
                   useBuiltIns: "entry",
-                  corejs: 3
-                }]]
+                }
+              ]
+            ]
           }
         }
       },
       {
         test: /\.html$/i,
-        use: [
-          {
-            loader: 'html-loader',
-            options: {
-              minimize: true,
-            }
+        use: [{
+          loader: 'html-loader',
+          options: {
+            minimize: true,
           }
-        ]
+        }]
       },
       {
         test: /\.s[ac]ss$/i,

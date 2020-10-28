@@ -1,27 +1,38 @@
-import { classUtils } from '../../utils';
+import {
+  $generateTemplate,
+  $classUtils
+} from '$utils';
 import header from './header.html';
 import './header.scss';
 
-export class HeaderController {
-  constructor () {
-    const el = document.createElement('div');
-    el.innerHTML = header;
-    this.template = el.firstChild;
+export const HeaderController = (function () {
+  const _el = {
+    menu: null
+  };
+
+  // Global props
+  this.template = $generateTemplate(header);
+
+  // Global functions
+  this.onInit = function () {
+    _el.menu = this.template.querySelector('.headerWrapper__menu');
   }
 
-  onInit() {
-    this.menuTemplate = this.template.querySelector('.headerModule__menu');
-
-    if (!APP.view.bkp.sm) {
-      this.menuTemplate.addEventListener('mouseenter', () => {
-        classUtils.addClassEffect(this.menuTemplate, 'opened');
-      });
-      this.menuTemplate.addEventListener('mouseleave', () => {
-        classUtils.removeClassEffect(this.menuTemplate, 'opened');
-      });
-      this.menuTemplate.addEventListener('click', () => {
-        classUtils.toggleClassEffect(this.menuTemplate, 'opened');
-      });
-    }
+  this.onLoad = function () {
+    _el.menu.addEventListener('mouseenter', () => {
+      $classUtils.addClassEffect(_el.menu, 'opened');
+    });
+    _el.menu.addEventListener('mouseleave', () => {
+      $classUtils.removeClassEffect(_el.menu, 'opened');
+    });
+    _el.menu.addEventListener('click', () => {
+      $classUtils.toggleClassEffect(_el.menu, 'opened');
+    });
   }
-};
+
+  this.render = function () {
+    APP.state.root.insertBefore(this.template, APP.state.root.firstChild);
+  }
+
+  // Private functions
+});

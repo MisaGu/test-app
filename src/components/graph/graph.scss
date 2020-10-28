@@ -1,0 +1,36 @@
+@import "$scss/variables.scss";
+
+.graphWrapper {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid $color5;
+
+  &__chart {
+    background: #fff;
+
+    &__polygon {
+      fill: rgba($color3, 0.8);
+    }
+
+    &__polyline {
+      fill: none;
+      stroke: rgba($color2, 0.8);
+      stroke-width: 2;
+    }
+
+    &__gridLines {
+      &__line {
+        stroke: $color1;
+        stroke-width: 0.3;
+      }
+    }
+  }
+
+  sg {
+
+    polygon {
+      box-shadow: inset 2px 0 red;
+      fill: rgba($color3, 0.6);
+    }
+  }
+}

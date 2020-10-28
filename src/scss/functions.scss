@@ -1,29 +1,40 @@
 @function numberTypeMultiplier($type) {
   $multiplier: 1;
-  @if $type == n {
+
+  @if $type==n {
     $multiplier: -1;
   }
+
   @return $multiplier;
 }
 
-@each $numberType, $typeAbbr in (positive: "", negative: n) {
-  @each $prop, $abbrev in (margin: m, padding: p) {
-    @each $size, $length in $spacers {
+@each $numberType,
+$typeAbbr in (positive: "", negative: n) {
+
+  @each $prop,
+  $abbrev in (margin: m, padding: p) {
+
+    @each $size,
+    $length in $spacers {
       .#{$abbrev}-#{$typeAbbr}#{$size} {
         #{$prop}: numberTypeMultiplier($typeAbbr) * $length !important;
       }
+
       .#{$abbrev}t-#{$typeAbbr}#{$size},
       .#{$abbrev}y-#{$typeAbbr}#{$size} {
         #{$prop}-top: numberTypeMultiplier($typeAbbr) * $length !important;
       }
+
       .#{$abbrev}r-#{$typeAbbr}#{$size},
       .#{$abbrev}x-#{$typeAbbr}#{$size} {
         #{$prop}-right: numberTypeMultiplier($typeAbbr) * $length !important;
       }
+
       .#{$abbrev}b-#{$typeAbbr}#{$size},
       .#{$abbrev}y-#{$typeAbbr}#{$size} {
         #{$prop}-bottom: numberTypeMultiplier($typeAbbr) * $length !important;
       }
+
       .#{$abbrev}l-#{$typeAbbr}#{$size},
       .#{$abbrev}x-#{$typeAbbr}#{$size} {
         #{$prop}-left: numberTypeMultiplier($typeAbbr) * $length !important;

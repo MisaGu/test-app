@@ -1,84 +1,85 @@
-import { HeaderController } from './components';
-import { elUID } from './utils';
+import {
+  config
+} from './config';
 
-// declare glob params
-window.APP = {
-  uiBkp: {
-    xs: 0,
-    sm: 480,
-    md: 768,
-    lg: 1024
-  },
-  staticControllers: [
-    new HeaderController()
-  ],
-  root: document.getElementById('root'),
-  view: {
-    bkp: {}
-  },
-  // custom attr => HTMLElement attr
-  reservedAttributes: { 'sd_class': 'className' },
-  shadowDOM: new Map()
-};
+window.APP = new(function ($, $$) {
+  this.state = $.state;
 
-// init render
-window.onload = function () {
-  generateControllers();
-  calcAndAssignBreakpoints();
-};
+  // Init
+  $$.addEventListener('load', () => {
+    this.generateControllers();
+    this.calcAndAssignBreakpoints();
+  });
 
+  $$.addEventListener('resize', () => {
+    const currentBreakpoints = calcBreakpoints();
+    if (JSON.stringify(currentBreakpoints) != JSON.stringify($.state.view.bkp)) {
+      this.calcAndAssignBreakpoints();
+    }
+  });
 
-window.onresize = function () {
-  const currentBreakpoints = useBreakpoints();
-  if (JSON.stringify(currentBreakpoints) != JSON.stringify(APP.view.bkp)) {
-    calcAndAssignBreakpoints();
-  }
-};
+  this.generateControllers = function () {
+    for (let _ in $.config.controllers) {
+      const controller = $.config.controllers[_];
 
-function useBreakpoints() {
-  return Object.keys(APP.uiBkp).reduce((acc, key) => (acc[key] = window.innerWidth >= APP.uiBkp[key], acc), {});
-}
+      attrConverter(controller.template, Object.keys($.config.attributesMap));
 
-function useBreakpointsStringify(bp) {
-  return Object.keys(bp).reduce((acc, key) => (bp[key] && acc.push(key), acc), []).join(' ');
-}
-
-function attrConverter(node, attrs = Object.keys(APP.reservedAttributes)) {
-  // convert reserved attributes to HTMLElement attributes
-  if (node.nodeType == 1) {
-    const cloneNode = node.cloneNode();
-    attrs.forEach((rAttr) => {
-      if (node.getAttribute(rAttr)) {
-        node[APP.reservedAttributes[rAttr]] = node.getAttribute(rAttr);
-        node.removeAttribute(rAttr);
-
-        APP.shadowDOM.set(
-          node, Object.keys(cloneNode.attributes).reduce((acc, key) =>
-            (acc[cloneNode.attributes[key].name] = cloneNode.attributes[key].value, acc),
-            {}
-          )
-        );
+      if (controller.onInit)
+        controller.onInit();
+      if (controller.onLoad)
+        document.addEventListener('loadstart', controller.onLoad());
+      if (controller.render)
+        controller.render();
+      else {
+        console.error(`Controller ${controller.constructor.name} missing 'render' function!`)
       }
-    });
+    }
   }
-  node = node.firstChild;
-  while (node) {
-    attrConverter(node);
-    node = node.nextSibling;
-  }
-}
 
-function generateControllers() {
-  for (let _ in APP.staticControllers) {
-    const node = APP.staticControllers[_];
-    attrConverter(node.template);
-    APP.root.appendChild(node.template);
-    if (node.onInit) node.onInit();
-    if (node.onLoad) document.addEventListener('loadstart', node.onLoad());
+  this.calcAndAssignBreakpoints = function () {
+    $.state.view.bkp = calcBreakpoints();
+    $.state.root.className = calcBreakpointsStringify($.state.view.bkp);
   }
-}
 
-function calcAndAssignBreakpoints() {
-  APP.view.bkp = useBreakpoints();
-  APP.root.className = useBreakpointsStringify(APP.view.bkp);
-}
+  // Private functions
+  function attrConverter(node, config_attrs) {
+    // convert reserved attributes to HTMLElement attributes
+    if (node.nodeType == 1) {
+      const cloneNode = node.cloneNode();
+      const cloneAttr = Object.keys(cloneNode.attributes).reduce((acc, key) =>
+        (acc[cloneNode.attributes[key].name] = cloneNode.attributes[key].value, acc), {});
+
+      config_attrs.forEach((rAttr) => {
+        if (cloneAttr[rAttr]) {
+          switch (true) {
+            case ['svg', 'polygon', 'polyline', 'g'].indexOf(node.tagName) != -1:
+              node.setAttribute($.config.attributesMap[rAttr].attr, cloneAttr[rAttr]);
+              break;
+            default:
+              node[$.config.attributesMap[rAttr].param] = cloneAttr[rAttr];
+          }
+          node.removeAttribute(rAttr);
+
+          $.state.shadowDOM.set(node, cloneAttr);
+        }
+      });
+    }
+    node = node.firstChild;
+    while (node) {
+      attrConverter(node, config_attrs);
+      node = node.nextSibling;
+    }
+  }
+
+  function calcBreakpoints() {
+    const bkp = $.config.gridBreakpoints;
+    return Object.keys(bkp).reduce((acc, key) => {
+      acc[key] = $$.innerWidth >= bkp[key] ? bkp[key] : false;
+      return acc
+    }, {});
+  }
+
+  function calcBreakpointsStringify(bkp) {
+    return Object.keys(bkp).reduce((acc, key) => (bkp[key] && acc.push(key), acc), []).join(' ');
+  }
+})(config, window);

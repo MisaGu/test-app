@@ -1,0 +1,22 @@
+@import "$scss/variables.scss";
+
+.artistListWrapper {
+  border: 1px solid $color5;
+  margin-top: 20px;
+  padding: 10px;
+
+  &__text {
+    line-height: 18px;
+  }
+
+  &__list {
+    &__item {
+      padding: 5px;
+      cursor: pointer;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+}

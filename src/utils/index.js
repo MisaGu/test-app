@@ -1,1 +1,2 @@
-export * from './elementClassUtils';
+export * from './elementClass.utils';
+export * from './generateTemplate.utils';

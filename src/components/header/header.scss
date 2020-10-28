@@ -1,11 +1,13 @@
-.headerModule {
-  background: #b5b5b5;
+@import "$scss/variables.scss";
+
+.headerWrapper {
+  background: $color5;
   height: 40px;
   line-height: 40px;
   position: relative;
 
   &:before {
-    content: '';
+    content: "";
     display: block;
     position: absolute;
     top: 0;
@@ -57,13 +59,15 @@
 }
 
 #root:not(.sm) {
-  .headerModule {
+  .headerWrapper {
     &__menu {
       float: right;
 
       &--opened {
-        .headerModule__menu__list {
+        .headerWrapper__menu__list {
           display: block;
+          background: #fff;
+          z-index: 9;
         }
       }
 
@@ -72,7 +76,7 @@
         position: absolute;
         top: 100%;
         right: -2px;
-        border: 1px solid #ddd;
+        border: 1px solid $color4;
         box-shadow: 0 10px 35px rgba(0, 0, 0, 0.1);
 
         &__item {
