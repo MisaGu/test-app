@@ -20,13 +20,13 @@ export const HeaderController = (function () {
 
   this.onLoad = function () {
     _el.menu.addEventListener('mouseenter', () => {
-      $classUtils.addClassEffect(_el.menu, 'opened');
+      $classUtils.addClassModifier(_el.menu, 'opened');
     });
     _el.menu.addEventListener('mouseleave', () => {
-      $classUtils.removeClassEffect(_el.menu, 'opened');
+      $classUtils.removeClassModifier(_el.menu, 'opened');
     });
     _el.menu.addEventListener('click', () => {
-      $classUtils.toggleClassEffect(_el.menu, 'opened');
+      $classUtils.toggleClassModifier(_el.menu, 'opened');
     });
   }
 

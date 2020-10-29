@@ -19,4 +19,26 @@
       }
     }
   }
+
+  &__filter {
+    font-weight: 600;
+
+    &__option {
+      display: inline-block;
+      border-bottom: 1px solid transparent;
+      font-weight: 300;
+      padding: 4px 6px;
+      margin: 0 2px;
+      cursor: pointer;
+
+      &:hover {
+        border-color: $color4;
+      }
+
+      &--active {
+        background: $color5;
+        border-color: $color4;
+      }
+    }
+  }
 }

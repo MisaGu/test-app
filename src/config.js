@@ -1,4 +1,7 @@
 import {
+  $classUtils
+} from '$utils';
+import {
   HeaderController,
   GraphController,
   SidebarController,
@@ -12,9 +15,14 @@ export const config = Object.freeze({
    */
   config: {
     attributesMap: {
-      'sd_class': {
+      sd_class: {
         param: 'className',
         attr: 'class'
+      },
+      sd_class_modifier: {
+        effect: (node, val) => {
+          $classUtils.addClassModifier(node, val)
+        }
       }
     },
     gridBreakpoints: {

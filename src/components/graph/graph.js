@@ -152,7 +152,7 @@ export const GraphController = (function () {
       if (!_el.points[x]) {
         _text.setAttribute('class', `${APP.state.shadowDOM.get(_el.pointLabels).sd_class}__text`);
         _text.setAttribute('text-anchor', 'middle');
-        _text.textContent = _opt.values[x];
+        _text.textContent = `S${x + 1}`; //_opt.values[x];
 
         _el.points.push(_text);
         _el.pointLabels.appendChild(_text);

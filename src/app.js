@@ -58,6 +58,9 @@ window.APP = new(function ($, $$) {
             default:
               node[$.config.attributesMap[rAttr].param] = cloneAttr[rAttr];
           }
+
+          const attrEffect = $.config.attributesMap[rAttr].effect;
+          if (attrEffect) attrEffect(node, cloneAttr[rAttr])
           node.removeAttribute(rAttr);
 
           $.state.shadowDOM.set(node, cloneAttr);

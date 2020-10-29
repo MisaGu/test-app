@@ -4,11 +4,11 @@ function addClass(el, className) {
     el.className += className;
 }
 
-function addClassEffect(el, effectName) {
+function addClassModifier(el, modifierName) {
   const c = APP.state.shadowDOM.get(el).sd_class;
-  effectName = ` ${c}--${effectName}`;
-  if (el.className.indexOf(effectName) == -1)
-    el.className += effectName;
+  modifierName = ` ${c}--${modifierName}`;
+  if (el.className.indexOf(modifierName) == -1)
+    el.className += modifierName;
 }
 
 function replaceClass(el, replaceableClass, replacementСlass) {
@@ -17,11 +17,11 @@ function replaceClass(el, replaceableClass, replacementСlass) {
     el.className = c.replace(replaceableClass, replacementСlass);
 }
 
-function replaceClassEffect(el, replaceableEffect, replacementEffect) {
+function replaceClassModifier(el, replaceableModifier, replacementModifier) {
   const c = APP.state.shadowDOM.get(el).sd_class;
-  replaceableEffect = ` ${c}--${replaceableEffect}`;
-  if (el.className.indexOf(replaceableEffect) != -1)
-    el.className = c.replace(replaceableEffect, ` ${c}--${replacementEffect}`);
+  replaceableModifier = ` ${c}--${replaceableModifier}`;
+  if (el.className.indexOf(replaceableModifier) != -1)
+    el.className = c.replace(replaceableModifier, ` ${c}--${replacementModifier}`);
 }
 
 function removeClass(el, removeClass) {
@@ -30,11 +30,11 @@ function removeClass(el, removeClass) {
     el.className = c.replace(removeClass, '');
 }
 
-function removeClassEffect(el, removeEffect) {
+function removeClassModifier(el, removeModifier) {
   const c = APP.state.shadowDOM.get(el).sd_class;
-  removeEffect = ` ${c}--${removeEffect}`;
-  if (el.className.indexOf(removeEffect) != -1)
-    el.className = c.replace(removeEffect, '');
+  removeModifier = ` ${c}--${removeModifier}`;
+  if (el.className.indexOf(removeModifier) != -1)
+    el.className = c.replace(removeModifier, '');
 }
 
 function toggleClass(el, toggleClass) {
@@ -43,19 +43,19 @@ function toggleClass(el, toggleClass) {
   else removeClass(el, toggleClass);
 }
 
-function toggleClassEffect(el, toggleClassEffect) {
+function toggleClassModifier(el, toggleClassModifier) {
   const c = APP.state.shadowDOM.get(el).sd_class;
-  if (el.className.indexOf(` ${c}--${toggleClassEffect}`) == -1) addClassEffect(el, toggleClassEffect);
-  else removeClassEffect(el, toggleClassEffect);
+  if (el.className.indexOf(` ${c}--${toggleClassModifier}`) == -1) addClassModifier(el, toggleClassModifier);
+  else removeClassModifier(el, toggleClassModifier);
 }
 
 export const $classUtils = Object.freeze({
   addClass,
-  addClassEffect,
+  addClassModifier,
   replaceClass,
-  replaceClassEffect,
+  replaceClassModifier,
   removeClass,
-  removeClassEffect,
+  removeClassModifier,
   toggleClass,
-  toggleClassEffect,
+  toggleClassModifier,
 });
