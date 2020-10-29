@@ -42,10 +42,16 @@
         float: left;
         width: 70px;
         text-align: center;
+        border-bottom: 1px solid transparent;
         cursor: pointer;
 
         &:hover {
           background: rgba(0, 0, 0, 0.1);
+        }
+
+        &--active {
+          background: rgba(0, 0, 0, 0.1);
+          border-color: $color1;
         }
       }
     }
@@ -81,6 +87,10 @@
 
         &__item {
           float: unset;
+
+          &--active {
+            border-color: transparent;
+          }
         }
       }
 

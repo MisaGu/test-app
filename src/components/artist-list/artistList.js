@@ -8,7 +8,7 @@ import './artistList.scss';
 export const ArtistListController = (function () {
   const _el = {
     filter: null,
-    filter__options: []
+    filterOptions: []
   };
 
   // Global props
@@ -17,11 +17,11 @@ export const ArtistListController = (function () {
   // Global functions
   this.onInit = function () {
     _el.filter = this.template.querySelector('.artistListWrapper__filter');
-    _el.filter__options = Array.apply(null, this.template.querySelectorAll('.artistListWrapper__filter__option'));
+    _el.filterOptions = Array.apply(null, this.template.querySelectorAll('.artistListWrapper__filter__option'));
   }
   this.onLoad = function () {
-    _el.filter__options.forEach((opt) => opt.addEventListener('click', (e) => {
-      _el.filter__options.forEach((_opt) => $classUtils.removeClassModifier(_opt, 'active'));
+    _el.filterOptions.forEach((opt) => opt.addEventListener('click', (e) => {
+      _el.filterOptions.forEach((_opt) => $classUtils.removeClassModifier(_opt, 'active'));
       $classUtils.addClassModifier(e.target, 'active');
     }));
   }

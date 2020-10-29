@@ -7,7 +7,8 @@ import './header.scss';
 
 export const HeaderController = (function () {
   const _el = {
-    menu: null
+    menu: null,
+    menuItems: []
   };
 
   // Global props
@@ -16,18 +17,25 @@ export const HeaderController = (function () {
   // Global functions
   this.onInit = function () {
     _el.menu = this.template.querySelector('.headerWrapper__menu');
+    _el.menuList = this.template.querySelector('.headerWrapper__menu__list');
+    _el.menuItems = Array.apply(null, this.template.querySelector('.headerWrapper__menu__list__item'));
+    console.log(_el)
   }
 
   this.onLoad = function () {
     _el.menu.addEventListener('mouseenter', () => {
-      $classUtils.addClassModifier(_el.menu, 'opened');
+      if (!APP.state.view.bkp.sm) $classUtils.addClassModifier(_el.menu, 'opened');
     });
     _el.menu.addEventListener('mouseleave', () => {
       $classUtils.removeClassModifier(_el.menu, 'opened');
     });
     _el.menu.addEventListener('click', () => {
-      $classUtils.toggleClassModifier(_el.menu, 'opened');
+      if (!APP.state.view.bkp.sm) $classUtils.toggleClassModifier(_el.menu, 'opened');
     });
+    _el.menuItems.forEach((opt) => opt.addEventListener('click', (e) => {
+      _el.menuItems.forEach((_opt) => $classUtils.removeClassModifier(_opt, 'active'));
+      $classUtils.addClassModifier(e.target, 'active');
+    }));
   }
 
   this.render = function () {
