@@ -1,2 +1,3 @@
-export * from './elementClass.utils';
-export * from './generateTemplate.utils';
+export * from './elementClass.util';
+export * from './generateTemplate.util';
+export * from './attrConverter.util';

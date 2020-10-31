@@ -23,13 +23,13 @@ export const HeaderController = (function () {
 
   this.onLoad = function () {
     _el.menu.addEventListener('mouseenter', () => {
-      if (!APP.state.view.bkp.sm) $classUtils.addClassModifier(_el.menu, 'opened');
+      if (!APP.state.viewBkp.sm) $classUtils.addClassModifier(_el.menu, 'opened');
     });
     _el.menu.addEventListener('mouseleave', () => {
       $classUtils.removeClassModifier(_el.menu, 'opened');
     });
     _el.menu.addEventListener('click', () => {
-      if (!APP.state.view.bkp.sm) $classUtils.toggleClassModifier(_el.menu, 'opened');
+      if (!APP.state.viewBkp.sm) $classUtils.toggleClassModifier(_el.menu, 'opened');
     });
     _el.menuItems.forEach((opt) => opt.addEventListener('click', (e) => {
       _el.menuItems.forEach((_opt) => $classUtils.removeClassModifier(_opt, 'active'));

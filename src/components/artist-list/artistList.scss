@@ -6,6 +6,7 @@
   padding: 10px;
 
   &__text {
+    margin: 0 10px;
     line-height: 18px;
   }
 
@@ -22,6 +23,7 @@
 
   &__filter {
     font-weight: 600;
+    margin: 20px 5px 10px;
 
     &__option {
       display: inline-block;
@@ -39,6 +41,50 @@
         background: $color5;
         border-color: $color4;
       }
+    }
+  }
+
+  &__content {
+    &:after {
+      content: '';
+      display: block;
+      clear: both;
+    }
+
+    .artistListItem {
+      width: 33.33%;
+      float: left;
+
+      &__wrapper {
+        background: $color6;
+      }
+
+      &__img {
+        height: 140px;
+        background-size: cover !important;
+        background-position: 0 15% !important;
+      }
+
+      &__name,
+      &__portrayed,
+      &__status,
+      &__dob,
+      &__appearance {
+        span {
+          font-weight: 600;
+        }
+      }
+    }
+  }
+
+  &__loader {
+    position: relative;
+    height: 0px;
+    overflow: hidden;
+    transition: height 0.2s;
+
+    &--active {
+      height: 60px;
     }
   }
 }

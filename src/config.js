@@ -48,8 +48,7 @@ export const config = Object.freeze({
     main: document.getElementById('main'),
     side: document.getElementById('side'),
     shadowDOM: new Map(),
-    view: {
-      bkp: {}
-    },
+    data: null,
+    viewBkp: {}
   }
 })

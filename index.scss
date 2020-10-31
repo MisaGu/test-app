@@ -2,7 +2,6 @@
 @import "/src/scss/functions.scss";
 
 body {
-  margin: 0;
   padding: 0;
   max-width: 1200px;
   margin: 0 auto;
@@ -17,30 +16,94 @@ body {
     position: relative;
   }
 
-  #main {
-    margin: 20px 0;
-    float: left;
-    width: calc(100% - 240px);
-  }
-
-  #side {
-    margin: 20px 0;
-    border: 1px solid $color6;
-    width: 220px;
-    min-height: 60vh;
-    float: right;
-  }
-
-  @media (max-width: $max-widths-lg) {
+  &.root--ready {
     #main {
-      float: unset;
-      width: 100%;
+      margin: 20px 0;
+      float: left;
+      width: calc(100% - 240px);
     }
 
     #side {
-      width: 100%;
-      min-height: auto;
-      float: unset;
+      margin: 20px 0;
+      border: 1px solid $color6;
+      width: 220px;
+      min-height: 60vh;
+      float: right;
+    }
+
+    #loader {
+      display: none;
+    }
+
+    @media (max-width: $max-widths-lg) {
+      #main {
+        float: unset;
+        width: 100%;
+      }
+
+      #side {
+        width: 100%;
+        min-height: auto;
+        float: unset;
+      }
+    }
+  }
+
+  &.root--error {
+    #loader {
+      display: none;
+    }
+  }
+
+  .root__error {
+    margin: 100px auto;
+    display: table;
+    text-align: center;
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  .loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    &>div {
+      display: inline-block;
+      width: 4px;
+      height: 18px;
+      animation: loading 1s ease-in-out infinite;
+
+      &:nth-child(1),
+      &:nth-child(5) {
+        animation-delay: 0;
+      }
+
+      &:nth-child(2),
+      &:nth-child(4) {
+        animation-delay: 0.09s;
+      }
+
+      &:nth-child(3) {
+        animation-delay: .18s;
+      }
+    }
+
+    @keyframes loading {
+      0% {
+        transform: scale(1);
+        background-color: $color1;
+      }
+
+      20% {
+        transform: scale(1, 2.2);
+        background-color: $color2;
+      }
+
+      40% {
+        transform: scale(1);
+        background-color: $color3;
+      }
     }
   }
 }
