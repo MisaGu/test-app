@@ -18,8 +18,7 @@ export const HeaderController = (function () {
   this.onInit = function () {
     _el.menu = this.template.querySelector('.headerWrapper__menu');
     _el.menuList = this.template.querySelector('.headerWrapper__menu__list');
-    _el.menuItems = Array.apply(null, this.template.querySelector('.headerWrapper__menu__list__item'));
-    console.log(_el)
+    _el.menuItems = Array.apply(null, this.template.querySelectorAll('.headerWrapper__menu__list__item'));
   }
 
   this.onLoad = function () {
