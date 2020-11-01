@@ -7,21 +7,22 @@ import './header.scss';
 
 export const HeaderController = (function () {
   const _el = {
-    menu: null,
-    menuItems: []
-  };
+      menu: null,
+      menuItems: []
+    },
+    _that = this;
 
   // Global props
-  this.template = $generateTemplate(header);
+  _that.template = $generateTemplate(header);
 
   // Global functions
-  this.onInit = function () {
-    _el.menu = this.template.querySelector('.headerWrapper__menu');
-    _el.menuList = this.template.querySelector('.headerWrapper__menu__list');
-    _el.menuItems = Array.apply(null, this.template.querySelectorAll('.headerWrapper__menu__list__item'));
+  _that.onInit = function () {
+    _el.menu = _that.template.querySelector('.headerWrapper__menu');
+    _el.menuList = _that.template.querySelector('.headerWrapper__list');
+    _el.menuItems = Array.apply(null, _that.template.querySelectorAll('.headerWrapper__item'));
   }
 
-  this.onLoad = function () {
+  _that.onLoad = function () {
     _el.menu.addEventListener('mouseenter', () => {
       if (!APP.state.viewBkp.sm) $classUtils.addClassModifier(_el.menu, 'opened');
     });
@@ -37,8 +38,8 @@ export const HeaderController = (function () {
     }));
   }
 
-  this.render = function () {
-    APP.state.root.insertBefore(this.template, APP.state.root.firstChild);
+  _that.render = function () {
+    APP.state.root.insertBefore(_that.template, APP.state.root.firstChild);
   }
 
   // Private functions

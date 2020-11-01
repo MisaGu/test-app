@@ -1,3 +1,4 @@
+import 'core-js/es/map'; // IE9+ Map lifehack :)
 import {
   $classUtils
 } from '$utils';

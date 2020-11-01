@@ -14,6 +14,7 @@ body {
   * {
     box-sizing: border-box;
     position: relative;
+    color: $color1;
   }
 
   &.root--ready {
@@ -33,6 +34,17 @@ body {
 
     #loader {
       display: none;
+
+      &:before {
+        content: '';
+        display: block;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background: white;
+        top: 0;
+        left: 0;
+      }
     }
 
     @media (max-width: $max-widths-lg) {

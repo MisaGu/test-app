@@ -11,7 +11,7 @@
   }
 
   &__list {
-    &__item {
+    &__thatem {
       padding: 5px;
       cursor: pointer;
 
@@ -23,24 +23,24 @@
 
   &__filter {
     font-weight: 600;
-    margin: 20px 5px 10px;
+    margin: 20px 8px 10px;
+  }
 
-    &__option {
-      display: inline-block;
-      border-bottom: 1px solid transparent;
-      font-weight: 300;
-      padding: 4px 6px;
-      margin: 0 2px;
-      cursor: pointer;
+  &__option {
+    display: inline-block;
+    border-bottom: 1px solid transparent;
+    font-weight: 300;
+    padding: 4px 6px;
+    margin: 0 2px;
+    cursor: pointer;
 
-      &:hover {
-        border-color: $color4;
-      }
+    &:hover {
+      border-color: $color4;
+    }
 
-      &--active {
-        background: $color5;
-        border-color: $color4;
-      }
+    &--active {
+      background: $color5;
+      border-color: $color4;
     }
   }
 
@@ -62,7 +62,6 @@
       &__img {
         height: 140px;
         background-size: cover !important;
-        background-position: 0 15% !important;
       }
 
       &__name,
@@ -74,17 +73,36 @@
           font-weight: 600;
         }
       }
+
+      * {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+
+      @media (max-width: $max-widths-md) {
+        width: 50%;
+      }
+
+      @media (max-width: $max-widths-sm) {
+        width: 100%;
+      }
     }
   }
 
   &__loader {
     position: relative;
-    height: 0px;
+    height: 60px;
     overflow: hidden;
+    visibility: hidden;
     transition: height 0.2s;
 
     &--active {
-      height: 60px;
+      visibility: visible;
+    }
+
+    &--hide {
+      height: 0px;
     }
   }
 }

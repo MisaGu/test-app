@@ -1,6 +1,5 @@
 import {
-  $generateTemplate,
-  $classUtils
+  $generateTemplate
 } from '$utils';
 import graph from './graph.html';
 import './graph.scss';
@@ -13,7 +12,7 @@ export const GraphController = (function () {
         l: 30,
         b: 20,
         r: 20,
-        t: 0
+        t: 20
       },
       maxValue: 0,
       scale: 0.9,
@@ -34,32 +33,38 @@ export const GraphController = (function () {
       lines: [],
       labels: [],
       points: [],
-    }
+    },
+    _that = this;
 
   // Global props
-  this.template = $generateTemplate(graph);
+  _that.template = $generateTemplate(graph);
 
   // Global functions
-  this.onInit = function () {
-    _el.chart = this.template.querySelector('.graphWrapper__chart');
-    _el.polygon = this.template.querySelector('.graphWrapper__chart__polygon');
-    _el.polyline = this.template.querySelector('.graphWrapper__chart__polyline');
-    _el.gridLines = this.template.querySelector('.graphWrapper__chart__gridLines');
-    _el.gridLabels = this.template.querySelector('.graphWrapper__chart__gridLabels');
-    _el.pointLabels = this.template.querySelector('.graphWrapper__chart__pointLabels');
+  _that.onInit = function () {
+    _el.chart = _that.template.querySelector('.graphWrapper__chart');
+    _el.polygon = _that.template.querySelector('.graphWrapper__polygon');
+    _el.polyline = _that.template.querySelector('.graphWrapper__polyline');
+    _el.gridLines = _that.template.querySelector('.graphWrapper__gridLines');
+    _el.gridLabels = _that.template.querySelector('.graphWrapper__gridLabels');
+    _el.pointLabels = _that.template.querySelector('.graphWrapper__pointLabels');
 
-    this.createChart([5, 8, 17, 13, 26, 2, 9, 5, 20]);
+    const statistic = APP.state.data.reduce(
+      (acc, artist) => (artist.appearance && artist.appearance.forEach(s => acc[`S${s}`] = (acc[`S${s}`] || 0) + 1), acc), {}
+    );
+    const statisticData = Object.keys(statistic).map(key => statistic[key]);
+    _that.createChart(statisticData);
   }
 
-  this.onLoad = function () {
+  _that.onLoad = function () {
     window.addEventListener('resize', () => {
       _opt.width = Math.min(1200, window.innerWidth);
       _opt.height = Math.min(300, window.innerWidth / 16 * 9);
-      this.createChart()
+      _that.createChart();
+      setChartHeight();
     })
   }
 
-  this.createChart = function (values) {
+  _that.createChart = function (values) {
     if (values) {
       _opt.values = values;
       _opt.maxValue = Math.ceil(Math.max.apply(null, values));
@@ -78,25 +83,32 @@ export const GraphController = (function () {
     }
   }
 
-  this.render = function () {
-    APP.state.main.insertBefore(this.template, APP.state.main.firstChild);
+  _that.render = function () {
+    APP.state.main.insertBefore(_that.template, APP.state.main.firstChild);
+    setTimeout(() => setChartHeight(), 100);
   }
 
   // Private functions
+  function setChartHeight() { // IE fix
+    const _styles = window.getComputedStyle(_that.template, null);
+    const padding = parseInt(_styles.getPropertyValue('padding-left')) + parseInt(_styles.getPropertyValue('padding-right'));
+    _el.chart.setAttribute('height', (_that.template.clientWidth - padding) * (_opt.height / _opt.width));
+  }
+
   function calcPoints() {
     _opt.points = [];
 
     if (_opt.values.length > 1) {
-      _opt.points.push(`${_opt.offset.l},${_opt.chartSize().height}`);
+      _opt.points.push(`${_opt.offset.l},${_opt.chartSize().height + _opt.offset.t}`);
 
       const steps = (_opt.chartSize().width) / (_opt.values.length - 1);
       for (let x = 0; x < _opt.values.length; x++) {
         const px = (steps * x) + _opt.offset.l;
-        const py = (_opt.chartSize().height - (_opt.chartSize().height * (_opt.values[x] / _opt.maxValue) * _opt.scale))
+        const py = (_opt.chartSize().height - (_opt.chartSize().height * (_opt.values[x] / _opt.maxValue)) + _opt.offset.t)
         _opt.points.push(`${px.toFixed(2)},${py.toFixed(2)}`);
       }
 
-      _opt.points.push(`${_opt.width - _opt.offset.r},${_opt.chartSize().height}`);
+      _opt.points.push(`${_opt.width - _opt.offset.r},${_opt.chartSize().height + _opt.offset.t}`);
     }
   }
 
@@ -105,7 +117,7 @@ export const GraphController = (function () {
 
     const n = _opt.chartSize().height / _opt.vSteps;
     for (let x = 0; x <= _opt.vSteps; x++) {
-      _opt.grid.push(_opt.chartSize().height - n * x * _opt.scale);
+      _opt.grid.push(_opt.chartSize().height - n * x);
     }
     _opt.grid.reverse();
   }
@@ -121,9 +133,9 @@ export const GraphController = (function () {
         _el.gridLines.appendChild(_line);
       }
 
-      _line.setAttribute('y1', _opt.grid[x]);
+      _line.setAttribute('y1', _opt.grid[x] + _opt.offset.t);
       _line.setAttribute('x2', _opt.width - _opt.offset.r + 10);
-      _line.setAttribute('y2', _opt.grid[x]);
+      _line.setAttribute('y2', _opt.grid[x] + _opt.offset.t);
     }
   }
 
@@ -134,14 +146,14 @@ export const GraphController = (function () {
         _text.setAttribute('class', `${APP.state.shadowDOM.get(_el.gridLabels).sd_class}__text`);
         _text.setAttribute('x', 0);
         _text.textContent = x !== _opt.grid.length - 1 ?
-          _opt.maxValue - Math.floor(_opt.maxValue * (_opt.grid[x] / _opt.height) * _opt.scale) :
+          _opt.maxValue - Math.floor(_opt.maxValue * (_opt.grid[x] / _opt.height)) :
           0;
 
         _el.labels.push(_text);
         _el.gridLabels.appendChild(_text);
       }
 
-      _text.setAttribute('y', _opt.grid[x] + 3);
+      _text.setAttribute('y', _opt.grid[x] + _opt.offset.t + 3);
     }
   }
 

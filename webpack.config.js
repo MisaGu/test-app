@@ -29,7 +29,7 @@ module.exports = {
                 'babel-preset-env',
                 {
                   targets: {
-                    esmodules: true,
+                    esmodules: true, // IE9+ import/export lifehack :)
                     ie: '9'
                   },
                   useBuiltIns: "entry",

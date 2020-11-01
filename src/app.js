@@ -1,3 +1,4 @@
+// import 'core-js/es/map';
 import {
   $classUtils,
   $attrConverter
@@ -27,20 +28,25 @@ window.APP = new(function ($, $$) {
   });
 
   this.generateControllers = function () {
-    for (let _ in $.config.controllers) {
-      const controller = $.config.controllers[_];
+    try {
+      for (let _ in $.config.controllers) {
+        const controller = $.config.controllers[_];
 
-      $attrConverter(controller.template, true);
+        $attrConverter(controller.template, true);
 
-      if (controller.onInit)
-        controller.onInit();
-      if (controller.onLoad)
-        document.addEventListener('loadstart', controller.onLoad());
-      if (controller.render)
-        controller.render();
-      else {
-        console.error(`Controller ${controller.constructor.name} missing 'render' function!`)
+        if (controller.onInit)
+          controller.onInit();
+        if (controller.onLoad)
+          document.addEventListener('loadstart', controller.onLoad());
+        if (controller.render)
+          controller.render();
+        else {
+          console.error(`Controller ${controller.constructor.name} missing 'render' function!`)
+        }
       }
+      $classUtils.addClassModifier($.state.root, 'ready');
+    } catch (e) {
+      $classUtils.addClassModifier($.state.root, 'error');
     }
   }
 
@@ -71,7 +77,6 @@ window.APP = new(function ($, $$) {
         showError(`Error ${xhr.status}: ${xhr.statusText}`);
       } else {
         $.state.data = JSON.parse(xhr.responseText);
-        $classUtils.addClassModifier($.state.root, 'ready');
       }
     } catch (err) { // instead of onerror IE10+
       showError("Request failed");

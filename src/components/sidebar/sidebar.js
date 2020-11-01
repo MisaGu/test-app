@@ -5,14 +5,14 @@ import sidebar from './sidebar.html';
 import './sidebar.scss';
 
 export const SidebarController = (function () {
-  const _el = {};
+  const _that = this;
 
   // Global props
-  this.template = $generateTemplate(sidebar);
+  _that.template = $generateTemplate(sidebar);
 
   // Global functions
-  this.render = function () {
-    APP.state.side.insertBefore(this.template, APP.state.side.firstChild);
+  _that.render = function () {
+    APP.state.side.insertBefore(_that.template, APP.state.side.firstChild);
   }
 
   // Private functions

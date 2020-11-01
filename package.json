@@ -10,6 +10,7 @@
   "author": "Sergey Lebed",
   "license": "ISC",
   "dependencies": {
+    "core-js": "^3.6.5",
     "express": "^4.16.3",
     "express-favicon": "^2.0.1",
     "path": "^0.12.7"
