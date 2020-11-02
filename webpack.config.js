@@ -7,7 +7,7 @@ module.exports = {
   ],
   output: {
     path: __dirname,
-    publicPath: '/',
+    publicPath: './',
     filename: 'bundle.js'
   },
   resolve: {
@@ -19,43 +19,47 @@ module.exports = {
   },
   module: {
     rules: [{
-        test: /\.js$/,
-        exclude: /(node_modules)/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: [
-              [
-                'babel-preset-env',
-                {
-                  targets: {
-                    esmodules: true, // IE9+ import/export lifehack :)
-                    ie: '9'
-                  },
-                  useBuiltIns: "entry",
-                }
-              ]
+      test: /\.js$/,
+      exclude: /(node_modules)/,
+      use: {
+        loader: 'babel-loader',
+        options: {
+          presets: [
+            [
+              'babel-preset-env',
+              {
+                targets: {
+                  esmodules: true, // IE9+ import/export lifehack :)
+                  ie: '9'
+                },
+                useBuiltIns: "entry",
+              }
             ]
-          }
+          ]
         }
-      },
-      {
-        test: /\.html$/i,
-        use: [{
-          loader: 'html-loader',
-          options: {
-            minimize: true,
-          }
-        }]
-      },
-      {
-        test: /\.s[ac]ss$/i,
-        use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader',
-        ],
-      },
+      }
+    },
+    {
+      test: /\.(jpe?g|png|gif|woff|woff2|eot|ttf|svg)$/,
+      loader: 'url-loader',
+    },
+    {
+      test: /\.html$/i,
+      use: [{
+        loader: 'html-loader',
+        options: {
+          minimize: true,
+        }
+      }]
+    },
+    {
+      test: /\.s[ac]ss$/i,
+      use: [
+        'style-loader',
+        'css-loader',
+        'sass-loader',
+      ],
+    },
     ]
   },
 };
