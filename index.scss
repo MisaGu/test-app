@@ -32,11 +32,15 @@ body {
       float: right;
     }
 
+    #footer {
+      clear: both;
+    }
+
     #loader {
       display: none;
 
       &:before {
-        content: '';
+        content: "";
         display: block;
         position: fixed;
         width: 100%;
@@ -80,7 +84,7 @@ body {
     top: 50%;
     left: 50%;
 
-    &>div {
+    & > div {
       display: inline-block;
       width: 4px;
       height: 18px;
@@ -97,7 +101,7 @@ body {
       }
 
       &:nth-child(3) {
-        animation-delay: .18s;
+        animation-delay: 0.18s;
       }
     }
 

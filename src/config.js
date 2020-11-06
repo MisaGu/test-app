@@ -6,7 +6,8 @@ import {
   HeaderController,
   GraphController,
   SidebarController,
-  ArtistListController
+  ArtistListController,
+  FooterController
 } from './components';
 
 export const config = Object.freeze({
@@ -22,7 +23,7 @@ export const config = Object.freeze({
       },
       sd_class_modifier: {
         effect: (node, val) => {
-          $classUtils.addClassModifier(node, val)
+          $classUtils.addClassModifier(node, val);
         }
       }
     },
@@ -36,7 +37,8 @@ export const config = Object.freeze({
       new HeaderController(),
       new GraphController(),
       new SidebarController(),
-      new ArtistListController()
+      new ArtistListController(),
+      new FooterController()
     ]
   },
 
@@ -48,8 +50,9 @@ export const config = Object.freeze({
     root: document.getElementById('root'),
     main: document.getElementById('main'),
     side: document.getElementById('side'),
+    footer: document.getElementById('footer'),
     shadowDOM: new Map(),
     data: null,
     viewBkp: {}
   }
-})
+});
