@@ -4,8 +4,8 @@
   "description": "",
   "module": "src/index.js",
   "scripts": {
-    "dev": "webpack-dev-server --mode development --open",
-    "start": "webpack -p && node server.js"
+    "dev": "webpack-dev-server --mode development --open"
+    // "start": "webpack -p && node server.js"
   },
   "author": "Sergey Lebed",
   "license": "ISC",
